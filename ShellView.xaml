@@ -1,0 +1,32 @@
+﻿<Window x:Class="App.StockMarket.ShellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:Shell="clr-namespace:App.StockMarket"   
+         mc:Ignorable="d" 
+        d:DataContext="{d:DesignInstance Shell:ShellViewModel}" WindowState="Maximized">
+
+	<Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Menu>
+            <MenuItem Grid.Row="0" Name="AddProduct" Header="_Add" />
+        </Menu>
+        <!--Text="Beursdrinken v1.0"-->
+        <TextBlock Grid.Row="1"
+                   Text=" v1.0"
+		           VerticalAlignment="Center"
+		           HorizontalAlignment="Center"
+		           FontSize="20" />
+
+        <ContentControl Name="StockMarket" Grid.Row="2" />
+        
+        <!--<ContentControl Name="Orders" />-->
+
+    </Grid>
+</Window>

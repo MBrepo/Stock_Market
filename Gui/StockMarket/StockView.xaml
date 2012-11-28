@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="App.StockMarket.Gui.StockMarket.StockView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:visualizationToolkit="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+             xmlns:Infrastructure="clr-namespace:App.StockMarket.Infrastructure" mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <Infrastructure:ValueToForegroundColorConverter x:Key="valueToForeground" />
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        
+        <TextBlock Grid.ColumnSpan="2" Grid.Column="0" Margin="5" 
+                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                   FontSize="20"
+                   FontWeight="ExtraBold"
+                   Grid.Row="0" Text="Name" Name="Stock_Name"/>
+        <StackPanel Grid.Column="0" Grid.Row="1">
+            <TextBlock  Text="Standaard prijs" Margin="5" />
+            <Label  Content="profiteer"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="1">
+            <Label Content="price"           
+               Name="Stock_DefaultPrice" ContentStringFormat="{}{0:€ .0}"/>
+            <Label Content="Profit" Name="Stock_Profit" ContentStringFormat="{}{0:€ .0}"/>
+        </StackPanel>
+
+        <!--<TextBlock Grid.Column="0" Grid.Row="2" Text="Huidige prijs"/>-->
+        <Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2"  Content="0.123" 
+                VerticalAlignment="Center" HorizontalAlignment="Center"
+               FontSize="24" Foreground="{Binding Path=Stock.Profit, Converter={StaticResource valueToForeground}}"   FontWeight="Heavy"
+               Name="Stock_CurrentPrice" ContentStringFormat="{}{0:€.0}"/>
+
+        <!--<TextBlock Grid.Column="1" Grid.Row="2" Text="Hui" Name="Stock_CurrentPrice" Margin="5"  />-->
+
+        <!--<ItemsControl Grid.RowSpan="4" Grid.Column="2" VerticalAlignment="Center" Name="Stock_PriceHistory">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock Text="{Binding Path=Price}" Margin="5"/>
+                        <TextBlock Text="{Binding Path=DateOfPlacement}" Margin="5"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>-->
+
+        <chartingToolkit:Chart Grid.Column="3" Grid.RowSpan="3" 
+                               MaxWidth="500" MinWidth="320" Height="200" VerticalAlignment="Center">
+            <chartingToolkit:LineSeries Name="Series"
+                                        IndependentValueBinding="{Binding Path=Key}"
+                                        DependentValueBinding="{Binding Path=Value}"
+                                        ItemsSource="{Binding Path=Series}"
+                                        Margin="0"
+                                        >
+                <chartingToolkit:LineSeries.IndependentAxis>
+                    <chartingToolkit:CategoryAxis Orientation="X" Visibility="Hidden"/>
+                </chartingToolkit:LineSeries.IndependentAxis>                
+
+            </chartingToolkit:LineSeries>
+            <chartingToolkit:Chart.LegendStyle>
+                <Style TargetType="visualizationToolkit:Legend">
+                    <Setter Property="Width" Value="0"/>
+                    <Setter Property="Height" Value="0"/>
+                </Style>
+            </chartingToolkit:Chart.LegendStyle>          
+
+        </chartingToolkit:Chart>
+        
+        
+        <!--<Button Content="Delete" Grid.Column="4" Name="DeleteStock" Height="20"  Width="48" />-->
+        
+        <ContentControl Grid.Column="4" Grid.Row="0" Grid.RowSpan="3" Name="Order" />
+        <Image Grid.Column="5" Grid.Row="0" Grid.RowSpan="3" Source="{Binding StockImage}" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        
+        
+    </Grid>
+</UserControl>
